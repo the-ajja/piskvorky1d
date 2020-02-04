@@ -18,10 +18,10 @@ def vyhodnot(herni_situace):
 def tah(herni_pole, index_policka, symbol):
     """Vrátí herní pole s daným symbolem umístěným na danou pozici."""
     if index_policka == 0:
-        return symbol + herni_pole[index_policka:]
+        return symbol + herni_pole[index_policka + 1:]
     if index_policka == delka_pole - 1:
-        return herni_pole[:index_policka - 1] + symbol
-    return herni_pole[:index_policka - 1] + symbol + herni_pole[index_policka:]
+        return herni_pole[:index_policka] + symbol
+    return herni_pole[:index_policka] + symbol + herni_pole[index_policka + 1:]
 
 
 def tah_hrace(herni_pole):
