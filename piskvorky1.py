@@ -2,6 +2,7 @@ from random import randrange
 
 symbol_hrace = "x"
 symbol_pocitace = "o"
+symbol_pole = '-'
 delka_pole = 20
 
 
@@ -63,7 +64,7 @@ def mozna_konec(herni_pole):
 
 
 def hra():
-    herni_pole = '-' * delka_pole
+    herni_pole = symbol_pole * delka_pole
     while True:
         herni_pole = tah_hrace(herni_pole)
         print(herni_pole)
