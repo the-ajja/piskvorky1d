@@ -1,11 +1,11 @@
 from random import randrange
 
-
 symbol_hrace = "x"
 symbol_pocitace = "o"
 delka_pole = 20
 
-def vyhodnot (herni_situace):
+
+def vyhodnot(herni_situace):
     if "xxx" in herni_situace:
         return "x"
     elif "ooo" in herni_situace:
@@ -17,6 +17,10 @@ def vyhodnot (herni_situace):
 
 def tah(herni_pole, index_policka, symbol):
     """Vrátí herní pole s daným symbolem umístěným na danou pozici."""
+    if index_policka == 0:
+        return symbol + herni_pole[index_policka:]
+    if index_policka == delka_pole - 1:
+        return herni_pole[:index_policka - 1] + symbol
     return herni_pole[:index_policka - 1] + symbol + herni_pole[index_policka:]
 
 
@@ -24,7 +28,7 @@ def tah_hrace(herni_pole):
     """ Zeptá se hráče kam chcce hrát a vrátí změněné pole"""
     while True:
         index_policka = int(input("Kam chceš hrát? ")) - 1
-        if index_policka >= delka_pole - 1 or index_policka < 0:
+        if index_policka > delka_pole - 1 or index_policka < 0:
             print("Takové políčko je mimo herní pole. Vyber jiné.")
         elif herni_pole[index_policka] == symbol_pocitace:
             print("Sem už hrál protihráč. Vyber jiné políčko.")
@@ -50,7 +54,7 @@ def mozna_konec(herni_pole):
         print('Vyhrál jsi!')
         return True
     elif vysledek == symbol_pocitace:
-        print ('Prohrál jsi!')
+        print('Prohrál jsi!')
         return True
     elif vysledek == '!':
         print('Je to remíza!')
