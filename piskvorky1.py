@@ -6,17 +6,17 @@ symbol_pole = '-'
 delka_pole = 20
 
 
-def vyhodnot(herni_situace):
-    if "xxx" in herni_situace:
+def vyhodnot(herni_pole: str):
+    if "xxx" in herni_pole:
         return "x"
-    elif "ooo" in herni_situace:
+    elif "ooo" in herni_pole:
         return "o"
-    elif "-" not in herni_situace:
+    elif "-" not in herni_pole:
         return "!"
     return "-"
 
 
-def tah(herni_pole, index_policka, symbol):
+def tah(herni_pole: str, index_policka: int, symbol: str):
     """Vrátí herní pole s daným symbolem umístěným na danou pozici."""
     if index_policka == 0:
         return symbol + herni_pole[index_policka + 1:]
@@ -25,7 +25,7 @@ def tah(herni_pole, index_policka, symbol):
     return herni_pole[:index_policka] + symbol + herni_pole[index_policka + 1:]
 
 
-def tah_hrace(herni_pole):
+def tah_hrace(herni_pole: str):
     """ Zeptá se hráče kam chcce hrát a vrátí změněné pole"""
     while True:
         index_policka = int(input("Kam chceš hrát? ")) - 1
@@ -40,16 +40,48 @@ def tah_hrace(herni_pole):
     return tah(herni_pole, index_policka, symbol_hrace)
 
 
-def tah_pocitace(herni_pole):
-    """Zahraje tah počítače - vyplní odpovídající symbol na vyhovující místo"""
-    while True:
-        index_policka = randrange(0, delka_pole - 1)
-        if herni_pole[index_policka] == '-':
+def symboly_v_okoli(herni_pole: str, od_indexu: int, symbol: str, vzdalenost: int):
+    vysledek = 0
+    for i in range(1, vzdalenost):
+        if od_indexu + i != symbol:
             break
+        vysledek = vysledek + 1
+    for i in range(1, vzdalenost):
+        if od_indexu - i != symbol:
+            break
+        vysledek = vysledek + 1
+    return vysledek
+
+
+def hodnoceni_policka(herni_pole: str, index_policka: int):
+    if not herni_pole[index_policka] == symbol_pole:
+        return 0
+    elif symboly_v_okoli(herni_pole, index_policka, symbol_pocitace, 2) >= 2:
+        return 7
+    elif symboly_v_okoli(herni_pole, index_policka, symbol_hrace, 2) >= 2:
+        return 6
+    elif symboly_v_okoli(herni_pole, index_policka, symbol_pocitace, 1) >= 1:
+        if symboly_v_okoli(herni_pole, index_policka, symbol_pole, 1) == 1:
+            return 5
+        return 1
+    elif symboly_v_okoli(herni_pole, index_policka, symbol_hrace, 1) == 1:
+        return 4
+    elif symboly_v_okoli(herni_pole, index_policka, symbol_pole, 2) >= 2:
+        return 3
+    else:
+        return 2
+
+
+def tah_pocitace(herni_pole: str):
+    """Zahraje tah počítače - vyplní odpovídající symbol na vyhovující místo"""
+    seznam_policek = list(range(delka_pole-1))
+    for index_policka in range(delka_pole - 1):
+        seznam_policek[index_policka] = hodnoceni_policka(herni_pole, index_policka)
+    index_policka = seznam_policek.index(max(seznam_policek))
     return tah(herni_pole, index_policka, symbol_pocitace)
 
 
-def mozna_konec(herni_pole):
+def mozna_konec(herni_pole: str):
     vysledek = vyhodnot(herni_pole)
     if vysledek == symbol_hrace:
         print('Vyhrál jsi!')
