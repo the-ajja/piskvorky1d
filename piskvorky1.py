@@ -71,7 +71,10 @@ def hodnoceni_policka(herni_pole: str, index_policka: int):
     elif symboly_v_okoli(herni_pole, index_policka, symbol_hrace, 1) == 1:
         return 4
     elif symboly_v_okoli(herni_pole, index_policka, symbol_pole, 2) >= 2:
-        return 3
+        if index_policka != 0:
+            return 3
+        else:
+            return 2
     else:
         return 2
 
