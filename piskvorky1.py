@@ -42,25 +42,29 @@ def tah_hrace(herni_pole: str):
 
 def symboly_v_okoli(herni_pole: str, od_indexu: int, symbol: str, vzdalenost: int):
     vysledek = 0
-    for i in range(1, vzdalenost):
-        if od_indexu + i != symbol:
+    for i in range(1, vzdalenost + 1):
+        if od_indexu + i > delka_pole - 1:
+            break
+        if herni_pole[od_indexu + i] != symbol:
             break
         vysledek = vysledek + 1
     for i in range(1, vzdalenost):
-        if od_indexu - i != symbol:
+        if od_indexu == 0:
+            break
+        if herni_pole[od_indexu - i] != symbol:
             break
         vysledek = vysledek + 1
     return vysledek
 
 
 def hodnoceni_policka(herni_pole: str, index_policka: int):
-    if not herni_pole[index_policka] == symbol_pole:
+    if herni_pole[index_policka] != symbol_pole:
         return 0
     elif symboly_v_okoli(herni_pole, index_policka, symbol_pocitace, 2) >= 2:
         return 7
     elif symboly_v_okoli(herni_pole, index_policka, symbol_hrace, 2) >= 2:
         return 6
-    elif symboly_v_okoli(herni_pole, index_policka, symbol_pocitace, 1) >= 1:
+    elif symboly_v_okoli(herni_pole, index_policka, symbol_pocitace, 1) == 1:
         if symboly_v_okoli(herni_pole, index_policka, symbol_pole, 1) == 1:
             return 5
         return 1
@@ -74,9 +78,9 @@ def hodnoceni_policka(herni_pole: str, index_policka: int):
 
 def tah_pocitace(herni_pole: str):
     """Zahraje tah počítače - vyplní odpovídající symbol na vyhovující místo"""
-    seznam_policek = list(range(delka_pole-1))
-    for index_policka in range(delka_pole - 1):
-        seznam_policek[index_policka] = hodnoceni_policka(herni_pole, index_policka)
+    seznam_policek = list(range(0, delka_pole))
+    for i in range(0, delka_pole):
+        seznam_policek[i] = hodnoceni_policka(herni_pole, i)
     index_policka = seznam_policek.index(max(seznam_policek))
     return tah(herni_pole, index_policka, symbol_pocitace)
 
