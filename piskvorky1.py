@@ -1,3 +1,4 @@
+"""utf-8"""
 from random import randrange
 
 symbol_hrace = "x"
@@ -7,11 +8,11 @@ delka_pole = 20
 
 
 def vyhodnot(herni_pole: str):
-    if "xxx" in herni_pole:
+    if symbol_hrace * 3 in herni_pole:
         return "x"
-    elif "ooo" in herni_pole:
+    elif symbol_pocitace * 3 in herni_pole:
         return "o"
-    elif "-" not in herni_pole:
+    elif symbol_pole not in herni_pole:
         return "!"
     return "-"
 
@@ -48,7 +49,7 @@ def symboly_v_okoli(herni_pole: str, od_indexu: int, symbol: str, vzdalenost: in
         if herni_pole[od_indexu + i] != symbol:
             break
         vysledek = vysledek + 1
-    for i in range(1, vzdalenost):
+    for i in range(1, vzdalenost + 1):
         if od_indexu == 0:
             break
         if herni_pole[od_indexu - i] != symbol:
@@ -71,7 +72,7 @@ def hodnoceni_policka(herni_pole: str, index_policka: int):
     elif symboly_v_okoli(herni_pole, index_policka, symbol_hrace, 1) == 1:
         return 4
     elif symboly_v_okoli(herni_pole, index_policka, symbol_pole, 2) >= 2:
-        if index_policka != 0:
+        if index_policka != 0 and index_policka != delka_pole - 1:
             return 3
         else:
             return 2
