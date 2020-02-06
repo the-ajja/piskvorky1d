@@ -1,5 +1,3 @@
-"""utf-8"""
-from random import randrange
 
 symbol_hrace = "x"
 symbol_pocitace = "o"
