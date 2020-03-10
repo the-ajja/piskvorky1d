@@ -68,7 +68,10 @@ def hodnoceni_policka(herni_pole: str, index_policka: int):
             return 5
         return 1
     elif symboly_v_okoli(herni_pole, index_policka, symbol_hrace, 1) == 1:
-        return 4
+        if index_policka != 0 and index_policka != delka_pole - 1:
+            return 4
+        else:
+            return 3
     elif symboly_v_okoli(herni_pole, index_policka, symbol_pole, 2) >= 2:
         if index_policka != 0 and index_policka != delka_pole - 1:
             return 3
@@ -81,6 +84,7 @@ def tah_pocitace(herni_pole: str):
     seznam_policek = list(range(0, delka_pole))
     for i in range(0, delka_pole):
         seznam_policek[i] = hodnoceni_policka(herni_pole, i)
+    print(''.join(map(str, seznam_policek)))
     index_policka = seznam_policek.index(max(seznam_policek))
     return tah(herni_pole, index_policka, symbol_pocitace)
 
