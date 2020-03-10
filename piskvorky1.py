@@ -25,7 +25,7 @@ def tah(herni_pole: str, index_policka: int, symbol: str):
 
 
 def tah_hrace(herni_pole: str):
-    """ Zeptá se hráče kam chcce hrát a vrátí změněné pole"""
+    """Zeptá se hráče kam chce hrát a vrátí změněné pole."""
     while True:
         index_policka = int(input("Kam chceš hrát? ")) - 1
         if index_policka > delka_pole - 1 or index_policka < 0:
@@ -74,8 +74,6 @@ def hodnoceni_policka(herni_pole: str, index_policka: int):
             return 3
         else:
             return 2
-    else:
-        return 2
 
 
 def tah_pocitace(herni_pole: str):
